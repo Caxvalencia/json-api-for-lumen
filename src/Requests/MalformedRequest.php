@@ -13,6 +13,7 @@ class MalformedRequest implements ErrorInterface
      */
     public function getId()
     {
+        return null;
     }
 
     /**
@@ -22,6 +23,7 @@ class MalformedRequest implements ErrorInterface
      */
     public function getLinks(): ?array
     {
+        return null;
     }
 
     /**
@@ -41,6 +43,7 @@ class MalformedRequest implements ErrorInterface
      */
     public function getCode(): ?string
     {
+        return null;
     }
 
     /**
@@ -75,6 +78,7 @@ class MalformedRequest implements ErrorInterface
      */
     public function getSource(): ?array
     {
+        return null;
     }
 
     /**
@@ -84,5 +88,6 @@ class MalformedRequest implements ErrorInterface
      */
     public function getMeta()
     {
+        return null;
     }
 }

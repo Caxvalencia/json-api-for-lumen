@@ -26,12 +26,17 @@ class EncoderService
         $this->config = $config;
     }
 
+    /**
+     * @param string $name
+     * @return mixed
+     * @throws \Exception
+     */
     public function getEncoder(string $name = 'default')
     {
         if (!isset($this->encoders[$name])) {
             if ($name === 'default') {
                 $config = $this->config;
-            } elseif(isset($this->config['encoders'][$name])) {
+            } elseif (isset($this->config['encoders'][$name])) {
                 $config = $this->config['encoders'][$name];
             } else {
                 throw new \Exception(sprintf('No configuration found for %s "%s"', Encoder::class, $name));
@@ -51,7 +56,7 @@ class EncoderService
                 if (is_array($config['jsonapi'])) {
                     $encoder->withJsonApiVersion($config['jsonapi']);
                 } elseif ($config['jsonapi'] === true) {
-                    $encoder->withJsonApiVersion();
+                    $encoder->withJsonApiVersion(true);
                 }
             }
             if (isset($config['meta']) && is_array($config['meta'])) {
