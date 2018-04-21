@@ -10,7 +10,7 @@
     "homepage": "https://github.com/realpage/json-api-for-lumen",
     "license": "MIT",
     "require": {
-        "php": "^7.0",
+        "php": "^7.1",
         "neomerx/json-api": "^2.0",
         "illuminate/http": "^5.4",
         "illuminate/support": "^5.4"
