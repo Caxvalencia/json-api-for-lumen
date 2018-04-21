@@ -42,7 +42,10 @@ class RequestTest extends TestCase
     public function suppliesValidator()
     {
         $validator = Mockery::mock(ValidatesRequests::class);
+
+        /** @var ValidatesRequests $validator */
         $this->request->setValidator($validator);
+
         $this->assertEquals($validator, $this->request->validator());
     }
 
@@ -60,6 +63,7 @@ class RequestTest extends TestCase
         $this->illuminateRequest->shouldReceive('getContent')->andReturn('{"Hello": "world""}');
 
         $error = null;
+
         try {
             $this->request->json();
         } catch (JsonApiException $e) {
@@ -76,9 +80,19 @@ class RequestTest extends TestCase
         $validator = Mockery::mock(ValidatesRequests::class);
         $validator->shouldReceive('isValid')->with($this->request)->andReturn(true);
 
+        /** @var ValidatesRequests $validator */
         $this->request->setValidator($validator);
 
-        $this->request->validate();
+        $exception = null;
+
+        try {
+            $this->request->validate();
+        } catch (RequestFailedValidation $e) {
+            $exception = $e;
+        }
+
+        $this->assertNull($exception);
+
     }
 
     /** @test */
@@ -89,6 +103,7 @@ class RequestTest extends TestCase
         $validator->shouldReceive('isValid')->with($this->request)->andReturn(false);
         $validator->shouldReceive('errors')->andReturn($errors);
 
+        /** @var ValidatesRequests $validator */
         $this->request->setValidator($validator);
 
         $exception = null;
@@ -113,7 +128,7 @@ class RequestTest extends TestCase
             ->with($action, $object)
             ->andReturn(false);
 
-        $this->request->authorize($action, $object);
+        $this->assertTrue($this->request->authorize($action, $object));
     }
 
     /** @test */
@@ -169,11 +184,13 @@ class RequestTest extends TestCase
             ->andReturn(true); // unauthorized
 
         $errors = [0 => null];
+
         try {
             $this->request->authorize($action, $object);
         } catch (JsonApiException $e) {
             $errors = $e->getErrors();
         }
+
         $this->assertEquals($expectedError, $errors[0]);
     }
 }
