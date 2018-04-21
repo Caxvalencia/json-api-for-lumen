@@ -149,7 +149,7 @@ class EncoderServiceTest extends \PHPUnit\Framework\TestCase
 
         $this->assertEquals($config['meta'], $this->getProperty($encoder, 'meta'));
         $this->assertEquals($config['jsonapi'], $this->getProperty($encoder, 'isAddJsonApiVersion'));
-        $this->assertNull($this->getProperty($encoder, 'jsonApiVersionMeta'));
+        $this->assertTrue($this->getProperty($encoder, 'jsonApiVersionMeta'));
 
         $config = [
             'schemas' => [],
@@ -176,7 +176,7 @@ class EncoderServiceTest extends \PHPUnit\Framework\TestCase
         $reflection = new \ReflectionClass($object);
         $property = $reflection->getProperty($name);
         $property->setAccessible(true);
-        
+
         return $property->getValue($object);
     }
 
